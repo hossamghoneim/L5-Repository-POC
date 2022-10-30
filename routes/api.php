@@ -1,5 +1,6 @@
 <?php
 
+use App\Article;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -19,3 +20,15 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::resource('post', 'PostsController');
+
+Route::get('add-files', function(){
+    $article = Article::create();
+
+    $article->addMedia(storage_path('demo/library-dublin.jpg'))->toMediaCollection();
+});
+
+Route::get('get-files', function(){
+    $article = Article::find(1);
+
+    return  $article->getFirstMedia();
+});
